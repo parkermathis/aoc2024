@@ -37,22 +37,18 @@ function Part2 (file_path)
 
 	if nxt_mul_end == nil then break end
 
-
-	local do_distance = nxt_mul_start - (nxt_do_start or 0)
-	if do_distance < 0 then do_distance = nxt_mul_start end
-	local dont_distance = nxt_mul_start - (nxt_dont_start or 0)
-	if dont_distance < 0 then dont_distance = nxt_mul_start end
-	
-	if do_distance < dont_distance and do_distance ~= dont_distance then enable = true end
-	if dont_distance < do_distance and do_distance ~= dont_distance then enable = false end
-
-	--print("Do: ", do_distance, " Dont: ", dont_distance, " Enable: ", enable)
-	if enable == true then sum = sum + (d1 * d2) end
-
-	search_start = nxt_mul_end
-
+	if (nxt_do_start or #text) < (nxt_dont_start or #text) and (nxt_do_start or #text) < (nxt_mul_start or #text) then
+		enable = true
+		search_start = (nxt_do_end or #text)
+	elseif (nxt_dont_start or #text) < (nxt_do_start or #text) and (nxt_dont_start or #text) < (nxt_mul_start or #text) then
+		enable = false
+		search_start = (nxt_dont_end or #text)
+	elseif (nxt_mul_start or #text) < (nxt_do_start or #text) and (nxt_mul_start or #text) < (nxt_dont_start or #text) then
+		if enable == true then sum = sum + (d1 * d2) end
+		search_start = (nxt_mul_end or #text)
+	end
     end
-    
+
     return sum
 end
 

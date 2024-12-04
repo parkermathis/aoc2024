@@ -40,5 +40,5 @@ luac.out
 *.hex
 
 # AoC 2024
-./input/*
-./test/*
+input/*
+test/*
